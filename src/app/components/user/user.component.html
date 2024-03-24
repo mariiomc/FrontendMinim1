@@ -1,5 +1,4 @@
 <section>
-    <h1>Search for a user to begin</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -15,4 +14,58 @@
     <div>
         <p>{{searchBarUserString}}</p>
     </div>
+
+    <section>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <!-- Display list of users -->
+                    <div>
+                        @if(userSelected==false){
+                            @for(user of users; track user._id)
+                            {
+                                <li style="padding:10px">
+                                    <button class="btn btn-primary" type="button" (click)="onSelectUser(user)">
+                                        <span class="name">{{user.first_name}} {{user.last_name}}</span>
+                                    </button>
+                                </li>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-auto">
+                    <!-- Display selected user details -->
+                    @if(selectedUser){
+                        <div>
+                            <h1>User Details</h1>
+                            <p>ID: {{selectedUser._id}}</p>
+                            <p>Full Name: {{selectedUser.first_name}} {{selectedUser.middle_name}} {{selectedUser.last_name}}</p>
+                            <p>E-mail: {{selectedUser.email}}</p>
+                            <p>Phone Number: {{selectedUser.phone_number}}</p>
+                            <p>Gender: {{selectedUser.gender}}</p>
+                            <p>User Rating: {{selectedUser.user_rating}}</p>
+                            <p>Description: {{selectedUser.description}}</p>
+                            <p>DNI: {{selectedUser.dni}}</p>
+                            <p>Personality: {{selectedUser.personality}}</p>
+                            <p>Password: {{selectedUser.password}}</p>
+                            <p>Birthday: {{selectedUser.birth_date}}</p>
+                            <p>Adress: {{selectedUser.address}}</p>
+                            <p>Housing Offered: {{selectedUser.housing_offered}}</p>
+                            <p>Emergency Contact: {{selectedUser.emergency_contact?.full_name}}</p>
+                            <p>Emergency Contact Phone: {{selectedUser.emergency_contact?.telephone}}</p>
+                            @if(selectedUser.user_deactivated==true){
+                                <p>User Status: Deactivated</p>
+                            }@else{
+                                <p>User Status: Active</p>
+                            }
+                            <p>Creation Date: {{selectedUser.creation_date}}</p>
+                            <p>Last Modified: {{selectedUser.modified_date}}</p>
+                            <button class="btn btn-primary" type="button" (click)="backToUserList()">Back</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    
 </section>

@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class UserComponent{
 searchBarUserString: string='';
 users: User[] = [];//users retrieved from the server
+selectedUser: User | null = null;
+userSelected: boolean = false;
 editMode:boolean=false;
 
 userForm = new FormGroup({
@@ -31,8 +33,20 @@ ngOnInit(): void {
 // Fetch data from API
 console.log('fetching users');
 this.userService.getUsers().subscribe(users => {
-  //this.users = users;
-  console.log(users);
+  this.users = users;
+  console.log(this.users);
 })
 }
+
+onSelectUser(user:User): void{
+  this.userSelected = true;
+  this.selectedUser = user;
+}
+
+backToUserList(): void{
+  this.userSelected = false;
+  this.selectedUser = null;
+}
+
+
 }
