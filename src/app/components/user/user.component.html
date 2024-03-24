@@ -1,1 +1,18 @@
-<p>user works!</p>
+<section>
+    <h1>Search for a user to begin</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="searchBarUserString">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p>{{searchBarUserString}}</p>
+    </div>
+</section>

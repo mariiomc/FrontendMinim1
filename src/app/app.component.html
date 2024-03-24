@@ -4,20 +4,22 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+            <a class="nav-link" routerLink="/user" routerLinkActive="active">Users</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/places" routerLinkActive="active">Places</a>
+            <a class="nav-link" routerLink="/place" routerLinkActive="active">Places</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/reviews" routerLinkActive="active">Reviews</a>
+            <a class="nav-link" routerLink="/review" routerLinkActive="active">Reviews</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/housing" routerLinkActive="active">Housing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/conversation" routerLinkActive="active">Conversations</a>
           </li>
         </ul>
       </div>
@@ -25,6 +27,15 @@
   </nav>
   
   <div class="content-wrapper">
+    <div class="container">
+      @if(isMainPage()){
+        <section class="text-center">
+          <h1>Welcome to Bankitos</h1>
+          <p>Welcome to Bankitos, here you can manage your users, places, reviews, housing and conversations!</p>
+        </section>
+      }
+    </div>
     <router-outlet></router-outlet>
   </div>
+  
   

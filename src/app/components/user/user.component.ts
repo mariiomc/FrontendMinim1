@@ -13,6 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-
+searchBarUserString: string='';
   
 }
