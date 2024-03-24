@@ -11,7 +11,7 @@ export interface User {
     places?: string[]; // Array to store place IDs
     reviews?: string[]; // Array to store review IDs
     conversations?:string[];
-    user_rating?:number;
+    user_rating?:string;
     photo?:string;
     description?:string;
     dni?:string;
@@ -21,10 +21,10 @@ export interface User {
     address?:string;
     housing_offered?:string[];
     emergency_contact?: {
-        full_name: string;
-        telephone: string;
+        full_name?: string;
+        telephone?: string;
     };
-    user_deactivated:boolean;
-    creation_date: Date;
-    modified_date: Date;
+    user_deactivated?:boolean;
+    creation_date?: Date;
+    modified_date?: Date;
 }

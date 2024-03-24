@@ -12,12 +12,11 @@ export class UserService {
   url: string = "http://127.0.0.1:3000";
 
   createUser(newUser : User |undefined) {
-    return this.http.post(this.url+'/users',newUser);
+    return this.http.post<User>(this.url+'/users',newUser);
   }
 
   getUser(findUser : User){
     return this.http.get<User>(this.url+'/users/'+findUser._id);
-
   }
 
   getUsers() {
