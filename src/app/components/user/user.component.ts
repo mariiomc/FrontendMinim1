@@ -2,7 +2,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { User } from '../../models/user';
 import {FormsModule} from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,27 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export class UserComponent {
+export class UserComponent{
 searchBarUserString: string='';
+users: User[] = [];//users retrieved from the server
+editMode:boolean=false;
+
+userForm = new FormGroup({
+  name: new FormControl('', Validators.required),
+  email: new FormControl('', Validators.required),
+});
+
+constructor( public userService: UserService, private formBuilder: FormBuilder)
+{
   
+} // Inyectamos el FormBuilder
+
+ngOnInit(): void {
+// Fetch data from API
+console.log('fetching users');
+this.userService.getUsers().subscribe(users => {
+  //this.users = users;
+  console.log(users);
+})
+}
 }

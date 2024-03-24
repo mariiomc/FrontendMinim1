@@ -1,16 +1,16 @@
 import * as mongoose from 'mongoose';
 
 export interface User {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     first_name:string;
     middle_name?:string;
     last_name:string;
     email: string;
     phone_number: string;
     gender: string;
-    places?: mongoose.Types.ObjectId[]; // Array to store place IDs
-    reviews?: mongoose.Types.ObjectId[]; // Array to store review IDs
-    conversations?:mongoose.Types.ObjectId[];
+    places?: string[]; // Array to store place IDs
+    reviews?: string[]; // Array to store review IDs
+    conversations?:string[];
     user_rating?:number;
     photo?:string;
     description?:string;
@@ -19,7 +19,7 @@ export interface User {
     password: string;
     birth_date: Date;
     address?:string;
-    housing_offered?:mongoose.Types.ObjectId[];
+    housing_offered?:string[];
     emergency_contact?: {
         full_name: string;
         telephone: string;
