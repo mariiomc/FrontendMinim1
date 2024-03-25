@@ -15,8 +15,8 @@ export class UserService {
     return this.http.post<User>(this.url+'/users',newUser);
   }
 
-  getUser(findUser : User){
-    return this.http.get<User>(this.url+'/users/'+findUser._id);
+  getUser(findUser : string){
+    return this.http.get<User>(this.url+'/users/'+findUser);
   }
 
   getUsers() {
@@ -24,11 +24,11 @@ export class UserService {
   }
   
   updateUser(editUser : User) {
-    return this.http.put(this.url+'/users/'+ editUser._id, editUser);
+    return this.http.put<User>(this.url+'/users/'+ editUser._id, editUser);
   }
   
-  deleteUser(deleteUser : User) {
-    return this.http.delete(this.url+'/users/'+ deleteUser._id);
+  deleteUser(deleteUserId : string) {
+    return this.http.delete(this.url+'/users/'+ deleteUserId);
   }
 
 }

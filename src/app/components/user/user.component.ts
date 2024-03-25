@@ -17,8 +17,12 @@ searchBarUserString: string='';
 users: User[] = [];//users retrieved from the server
 selectedUser: User | null = null;
 userSelected: boolean = false;
-editMode:boolean=false;
 createMode:boolean=false;
+searchUserMode:boolean=false;
+editMode:boolean=false;
+searchedUser: User | null = null;
+deactivateUserId:string='';
+userToBeEdited: User | null = null;
 
 userForm = new FormGroup({
   first_name: new FormControl('', Validators.required),
@@ -64,7 +68,11 @@ backToUserList(): void{
   this.userSelected = false;
   this.selectedUser = null;
   this.createMode = false;
+  this.searchUserMode = false;
+  this.searchedUser = null;
+  this.editMode = false;
 }
+
 createUserBtn(): void{
 this.createMode = true;
 }
@@ -124,6 +132,105 @@ refreshUserList(): void {
     this.users = users;
     console.log('User list updated:', this.users);
   });
-
 }
+
+  searchForUser(): void {
+    this.searchUserMode = true;
+    if(this.searchBarUserString != ''){
+      this.userService.getUser(this.searchBarUserString).subscribe(user => {
+        this.searchedUser = user;
+      });
+    }else{
+      this.searchedUser = null;
+    }
+  }
+
+  deactivateUser(): void {
+    if(this.selectedUser){
+      this.deactivateUserId = this.selectedUser._id || '';
+    }else if(this.searchedUser){
+      this.deactivateUserId = this.searchedUser._id || '';
+    }
+    this.userService.deleteUser(this.deactivateUserId).subscribe(() => { // Removed empty parentheses
+      this.refreshUserList();
+      this.backToUserList();
+    });
+  }
+
+  editUserMode(): void {
+    this.editMode = true;
+    if(this.selectedUser){
+      this.userToBeEdited = this.selectedUser;
+    }else if(this.searchedUser){
+      this.userToBeEdited = this.searchedUser;
+    }
+    this.userForm.patchValue({
+      first_name: this.userToBeEdited?.first_name || '',
+        middle_name:this.userToBeEdited?.middle_name || '',
+        last_name:this.userToBeEdited?.last_name || '', 
+        email:this.userToBeEdited?.email || '', 
+        phone_number:this.userToBeEdited?.phone_number || '',
+        gender:this.userToBeEdited?.gender || '',
+        user_rating: this.userToBeEdited?.user_rating || '',
+        photo: this.userToBeEdited?.photo || '',
+        description: this.userToBeEdited?.description || '',
+        dni: this.userToBeEdited?.dni || '',
+        personality: this.userToBeEdited?.personality || '',
+        password:  this.userToBeEdited?.password || '',
+        address: this.userToBeEdited?.address || '', 
+        emergency_contact: {
+          full_name: (this.userToBeEdited?.emergency_contact?.full_name || ''), // Ensure full_name is a string or empty string
+          telephone: (this.userToBeEdited?.emergency_contact?.telephone || '') // Ensure telephone is a string or empty string
+        }
+    });
+  }
+  editUserSubmit(): void {
+      // Extract form values
+      const formValues = this.userForm.value;
+      
+      // Check if birth_date is a valid date string
+      const birthDate = formValues.birth_date ? new Date(formValues.birth_date) : null;
+  
+      // Create a new user object from form values
+      const edit: User = {
+        _id: this.userToBeEdited?._id,
+        first_name: formValues.first_name || this.userToBeEdited?.first_name || '',
+        middle_name: formValues.middle_name || this.userToBeEdited?.middle_name || '',
+        last_name: formValues.last_name || this.userToBeEdited?.last_name || '', 
+        email: formValues.email || this.userToBeEdited?.email || '', 
+        phone_number: formValues.phone_number || this.userToBeEdited?.phone_number || '',
+        gender: formValues.gender || this.userToBeEdited?.gender || '',
+        user_rating: formValues.user_rating || this.userToBeEdited?.user_rating || '',
+        photo: formValues.photo || this.userToBeEdited?.photo || '',
+        description: formValues.description || this.userToBeEdited?.description || '',
+        dni: formValues.dni || this.userToBeEdited?.dni || '',
+        personality: formValues.personality || this.userToBeEdited?.personality || '',
+        password: formValues.password || this.userToBeEdited?.password || '',
+        birth_date: birthDate || this.userToBeEdited?.birth_date || new Date(),
+        address: formValues.address || this.userToBeEdited?.address || '', 
+        emergency_contact: {
+          full_name: (formValues.emergency_contact?.full_name || this.userToBeEdited?.emergency_contact?.full_name || ''), // Ensure full_name is a string or empty string
+          telephone: (formValues.emergency_contact?.telephone || this.userToBeEdited?.emergency_contact?.telephone || '') // Ensure telephone is a string or empty string
+        }
+        // Include other properties similarly
+      };
+      console.log(edit)
+  
+      this.userService.updateUser(edit).subscribe({
+        next: (editedUser: User) => {
+          console.log('User created:', editedUser);
+          // Optionally, reset the form after successful submission
+          this.refreshUserList();
+          this.userForm.reset();
+          this.editMode = false;
+          this.backToUserList();
+          // You may also want to navigate the user back to the user list view or perform any other action
+        },
+        error: (error: any) => {
+          console.error('Error creating user:', error);
+          // Handle error cases
+        }
+      });
+  }
+
 }
