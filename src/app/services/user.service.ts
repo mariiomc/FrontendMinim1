@@ -15,6 +15,10 @@ export class UserService {
     return this.http.post<User>(this.url+'/users',newUser);
   }
 
+  loginUser(email:string, password:string) {// we need to complete the function
+    return this.http.post<any>(this.url+'/login',{email, password});
+  }
+
   getUser(findUser : string){
     return this.http.get<User>(this.url+'/users/'+findUser);
   }
