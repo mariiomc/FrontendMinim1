@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  
-  constructor(private http:HttpClient) { }
+  token: string | null = null;
+
+  constructor(private http:HttpClient, private authService:AuthService) { }
 
   url: string = "http://127.0.0.1:3000";
+  
+  getToken() {
+    this.token = this.authService.getToken();
+  }
+
+  getHeaders() {
+    this.getToken();
+    let headers = new HttpHeaders();
+    headers = headers.set('x-access-token', this.token || '');
+    return headers;
+  }
 
   createUser(newUser : User |undefined) {
     return this.http.post<User>(this.url+'/users',newUser);
@@ -20,19 +33,19 @@ export class UserService {
   }
 
   getUser(findUser : string){
-    return this.http.get<User>(this.url+'/users/'+findUser);
+    return this.http.get<User>(this.url+'/users/admin'+findUser, { headers: this.getHeaders() });
   }
 
   getUsers() {
-    return this.http.get<User[]>(this.url+'/users');
+    return this.http.get<User[]>(this.url+'/users/admin', { headers: this.getHeaders() });
   }
   
   updateUser(editUser : User) {
-    return this.http.put<User>(this.url+'/users/'+ editUser._id, editUser);
+    return this.http.put<User>(this.url+'/users/'+ editUser._id, editUser, { headers: this.getHeaders() });
   }
   
   deleteUser(deleteUserId : string) {
-    return this.http.delete(this.url+'/users/'+ deleteUserId);
+    return this.http.delete(this.url+'/users/'+ deleteUserId, { headers: this.getHeaders() });
   }
 
 }

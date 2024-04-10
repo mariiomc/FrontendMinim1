@@ -48,7 +48,7 @@ userForm = new FormGroup({
 constructor( public userService: UserService, private formBuilder: FormBuilder)
 {
   
-} // Inyectamos el FormBuilder
+}
 
 ngOnInit(): void {
 // Fetch data from API
