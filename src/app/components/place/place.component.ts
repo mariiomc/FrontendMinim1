@@ -216,7 +216,7 @@ export class PlaceComponent {
             title: formValues.title || this.placeToBeEdited?.title || '',
             content: formValues.content || this.placeToBeEdited?.content || '',
             author: formValues.author || this.placeToBeEdited?.author || '', 
-            reviews: formValues.reviews|| this.placeToBeEdited?.reviews || '', 
+            reviews: formValues.reviews|| this.placeToBeEdited?.reviews || [], 
             rating: formValues.rating || this.placeToBeEdited?.rating || 0,
             coords: {
               latitude: (formValues.coords?.latitude||this.placeToBeEdited?.coords?.latitude || 0),
