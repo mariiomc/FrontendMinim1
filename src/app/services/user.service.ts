@@ -33,7 +33,7 @@ export class UserService {
   }
 
   getUser(findUser : string){
-    return this.http.get<User>(this.url+'/usersadmin'+findUser, { headers: this.getHeaders() });
+    return this.http.get<User>(this.url+'/usersadmin/'+findUser, { headers: this.getHeaders() });
   }
 
   getUsers() {
