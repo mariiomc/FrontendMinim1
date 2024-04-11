@@ -1,11 +1,11 @@
 import * as mongoose from 'mongoose';
 
 export interface Place {
-    _id?: mongoose.Types.ObjectId; // Optional _id field
+    _id?: string; // Optional _id field
     title: string;
     content: string;
-    author: mongoose.Types.ObjectId; // Reference to the User collection
-    reviews?: mongoose.Types.ObjectId[];
+    author: string; // Reference to the User collection
+    reviews?: string[];
     rating: number;
     coords: {
         latitude: number;
@@ -27,6 +27,7 @@ export interface Place {
         saturday: string;
         sunday: string;
     };
+    address: string;
     date: Date;
     deactivated: boolean;
 }
