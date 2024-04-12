@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class UserService {
   token: string | null = null;
+  newURL: string = '';
 
   constructor(private http:HttpClient, private authService:AuthService) { }
 
@@ -36,10 +37,12 @@ export class UserService {
     return this.http.get<User>(this.url+'/usersadmin/'+findUser, { headers: this.getHeaders() });
   }
 
-  getUsers() {
-    return this.http.get<User[]>(this.url+'/usersadmin', { headers: this.getHeaders() });
+  getUsers(page: number = 1, pageSize: number = 20) {
+    this.newURL = `${this.url}/usersadmin?page=${page}&pageSize=${pageSize}`;
+
+    return this.http.get<User[]>(this.newURL, { headers: this.getHeaders() });
   }
-  
+
   updateUser(editUser : User) {
     return this.http.put<User>(this.url+'/users/'+ editUser._id, editUser, { headers: this.getHeaders() });
   }

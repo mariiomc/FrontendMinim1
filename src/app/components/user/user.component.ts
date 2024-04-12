@@ -23,6 +23,9 @@ editMode:boolean=false;
 searchedUser: User | null = null;
 deactivateUserId:string='';
 userToBeEdited: User | null = null;
+pagesize:number=10;
+currentPage:number=1;
+
 
 userForm = new FormGroup({
   first_name: new FormControl('', Validators.required),
@@ -53,10 +56,11 @@ constructor( public userService: UserService, private formBuilder: FormBuilder)
 ngOnInit(): void {
 // Fetch data from API
 console.log('fetching users');
-this.userService.getUsers().subscribe(users => {
-  this.users = users;
-  console.log(this.users);
-})
+this.refreshUserList();
+// this.userService.getUsers(this.currentPage, this.pagesize).subscribe(users => {
+//   this.users = users;
+//   console.log(this.users);
+// })
 }
 
 onSelectUser(user:User): void{
@@ -128,10 +132,22 @@ onSubmit(): void {
 
 refreshUserList(): void {
   // Fetch the updated user list from the server
-  this.userService.getUsers().subscribe(users => {
+  this.userService.getUsers(this.currentPage, this.pagesize).subscribe(users => {
     this.users = users;
     console.log('User list updated:', this.users);
   });
+}
+
+previousPage(): void {
+  if(this.currentPage > 1){
+    this.currentPage--;
+    this.refreshUserList();
+  }
+}
+
+nextPage(): void {
+  this.currentPage++;
+  this.refreshUserList();
 }
 
   searchForUser(): void {
