@@ -43,7 +43,7 @@
                                 <li>Sunday: {{selectedPlace.schedule.sunday}}</li>
                             </ul>
                             <p>Address: {{selectedPlace.address}}</p>
-                            @if(selectedPlace.place_deactivated){
+                            @if(selectedPlace.deactivated){
                                 <p>Place Status: Deactivated</p>
                             }@else{
                                 <p>Place Status: Active</p>
@@ -115,7 +115,7 @@
                                     <input id="photo" type="text" formControlName="photo" class="form-control" required>
                                 </div>
                                 <div formGroupName="typeOfPlace">
-                                    <label>Type of Place:</label>
+                                    <h3>Type of Place:</h3>
                                     <div>
                                         <label for="bankito">Bankito:</label>
                                         <input id="bankito" type="checkbox" formControlName="bankito">
@@ -130,34 +130,34 @@
                                     </div>
                                 </div>
                                 <div formGroupName="schedule">
-                                    <label>Schedule:</label>
+                                    <h3>Schedule:</h3>
                                     <div>
                                         <label for="monday">Monday:</label>
-                                        <input id="monday" type="text" formControlName="monday" class="form-control" required>
+                                        <input id="monday" type="checkbox" formControlName="monday" >
                                     </div>
                                     <div>
                                         <label for="tuesday">Tuesday:</label>
-                                        <input id="tuesday" type="text" formControlName="tuesday" class="form-control" required>
+                                        <input id="tuesday" type="checkbox" formControlName="tuesday" >
                                     </div>
                                     <div>
                                         <label for="wednesday">Wednesday:</label>
-                                        <input id="wednesday" type="text" formControlName="wednesday" class="form-control" required>
+                                        <input id="wednesday" type="checkbox" formControlName="wednesday" >
                                     </div>
                                     <div>
                                         <label for="thursday">Thursday:</label>
-                                        <input id="thursday" type="text" formControlName="thursday" class="form-control" required>
+                                        <input id="thursday" type="checkbox" formControlName="thursday" >
                                     </div>
                                     <div>
                                         <label for="friday">Friday:</label>
-                                        <input id="friday" type="text" formControlName="friday" class="form-control" required>
+                                        <input id="friday" type="checkbox" formControlName="friday" >
                                     </div>
                                     <div>
                                         <label for="saturday">Saturday:</label>
-                                        <input id="saturday" type="text" formControlName="saturday" class="form-control" required>
+                                        <input id="saturday" type="checkbox" formControlName="saturday" >
                                     </div>
                                     <div>
                                         <label for="sunday">Sunday:</label>
-                                        <input id="sunday" type="text" formControlName="sunday" class="form-control" required>
+                                        <input id="sunday" type="checkbox" formControlName="sunday" >
                                     </div>
                                 </div>
                                 <div>
@@ -165,7 +165,7 @@
                                     <input id="address" type="text" formControlName="address" class="form-control" required>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn-primary">{{ createMode ? 'Create' : 'Save' }}</button>
+                                    <button type="button" class="btn btn-primary" (click)="editPlaceSubmit()">{{ createMode ? 'Create' : 'Save' }}</button>
                                     <span style="margin-right: 10px;"></span>
                                     <button class="btn btn-primary" type="button" (click)="backToPlaceList()">Cancel</button>
                                 </div>

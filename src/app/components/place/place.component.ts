@@ -28,7 +28,7 @@ export class PlaceComponent {
     title: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required),
     author: new FormControl('', Validators.required),
-    reviews: new FormControl(''),
+    reviews: new FormControl(['']),
     rating: new FormControl(0, Validators.required),
     coords: new FormGroup({
       latitude: new FormControl(0, Validators.required),
@@ -50,9 +50,9 @@ export class PlaceComponent {
       sunday: new FormControl('', Validators.required)
     }),
     address: new FormControl('', Validators.required),
-    place_deactivated: new FormControl('', Validators.required),
     creation_date: new FormControl('', Validators.required),
-    modified_date: new FormControl('', Validators.required)
+    modified_date: new FormControl('', Validators.required),
+    deactivated: new FormControl('', Validators.required)
   });
 
   constructor( public placeService: PlaceService, private formBuilder: FormBuilder)
@@ -96,8 +96,8 @@ export class PlaceComponent {
         const newPlace: Place = {
           title: formValues.title || '',
           content: formValues.content || '',
-          author: formValues.author || '', 
-          reviews: formValues || [], 
+          author: formValues.author || '',
+          reviews: formValues.reviews || [],
           rating: formValues.rating || 0,
           coords: {
             latitude: (formValues.coords?.latitude || 0),
@@ -119,6 +119,9 @@ export class PlaceComponent {
             sunday: (formValues.schedule?.sunday || ''),
           },
           address: formValues.address || '',
+          creation_date: new Date,
+          modified_date: new Date,
+          deactivated: false
         };
     
         this.placeService.createPlace(newPlace).subscribe({
@@ -181,7 +184,7 @@ export class PlaceComponent {
           title: this.placeToBeEdited?.title || '',
           content: this.placeToBeEdited?.content || '',
           author: this.placeToBeEdited?.author || '', 
-          reviews: this.placeToBeEdited?.reviews ||'', 
+          reviews: this.placeToBeEdited?.reviews || [], 
           rating: this.placeToBeEdited?.rating || 0,
           coords: {
             latitude: (this.placeToBeEdited?.coords?.latitude || 0),
@@ -215,30 +218,32 @@ export class PlaceComponent {
             _id: this.placeToBeEdited?._id,
             title: formValues.title || this.placeToBeEdited?.title || '',
             content: formValues.content || this.placeToBeEdited?.content || '',
-            author: formValues.author || this.placeToBeEdited?.author || '', 
-            reviews: formValues.reviews|| this.placeToBeEdited?.reviews || [], 
+            author: formValues.author || this.placeToBeEdited?.author || '',
+            reviews: formValues.reviews || this.placeToBeEdited?.reviews || [],
             rating: formValues.rating || this.placeToBeEdited?.rating || 0,
             coords: {
-              latitude: (formValues.coords?.latitude||this.placeToBeEdited?.coords?.latitude || 0),
-              longitude: (formValues.coords?.longitude||this.placeToBeEdited?.coords?.longitude || 0)
+              latitude: (formValues.coords?.latitude || this.placeToBeEdited?.coords?.latitude || 0),
+              longitude: (formValues.coords?.longitude || this.placeToBeEdited?.coords?.longitude || 0)
             },
-            photo: formValues.photo ||this.placeToBeEdited?.photo || '',
+            photo: formValues.photo || this.placeToBeEdited?.photo || '',
             typeOfPlace: {
-              bankito: (formValues.typeOfPlace?.bankito||this.placeToBeEdited?.typeOfPlace?.bankito || false),
-              public: (formValues.typeOfPlace?.public||this.placeToBeEdited?.typeOfPlace?.public || false),
-              covered: (formValues.typeOfPlace?.covered||this.placeToBeEdited?.typeOfPlace?.covered || false),
+              bankito: (formValues.typeOfPlace?.bankito || this.placeToBeEdited?.typeOfPlace?.bankito || false),
+              public: (formValues.typeOfPlace?.public || this.placeToBeEdited?.typeOfPlace?.public || false),
+              covered: (formValues.typeOfPlace?.covered || this.placeToBeEdited?.typeOfPlace?.covered || false),
             },
             schedule: {
-              monday: (formValues.schedule?.monday ||this.placeToBeEdited?.schedule?.monday || ''),
-              tuesday: (formValues.schedule?.tuesday ||this.placeToBeEdited?.schedule?.tuesday || ''),
-              wednesday: (formValues.schedule?.wednesday ||this.placeToBeEdited?.schedule?.wednesday || ''),
-              thursday: (formValues.schedule?.thursday ||this.placeToBeEdited?.schedule?.thursday || ''),
-              friday: (formValues.schedule?.friday ||this.placeToBeEdited?.schedule?.friday || ''),
-              saturday: (formValues.schedule?.saturday ||this.placeToBeEdited?.schedule?.saturday || ''),
-              sunday: (formValues.schedule?.sunday ||this.placeToBeEdited?.schedule?.sunday || ''),
+              monday: (formValues.schedule?.monday || this.placeToBeEdited?.schedule?.monday || ''),
+              tuesday: (formValues.schedule?.tuesday || this.placeToBeEdited?.schedule?.tuesday || ''),
+              wednesday: (formValues.schedule?.wednesday || this.placeToBeEdited?.schedule?.wednesday || ''),
+              thursday: (formValues.schedule?.thursday || this.placeToBeEdited?.schedule?.thursday || ''),
+              friday: (formValues.schedule?.friday || this.placeToBeEdited?.schedule?.friday || ''),
+              saturday: (formValues.schedule?.saturday || this.placeToBeEdited?.schedule?.saturday || ''),
+              sunday: (formValues.schedule?.sunday || this.placeToBeEdited?.schedule?.sunday || ''),
             },
-            address:formValues.address|| this.placeToBeEdited?.address || '',
-            // Include other properties similarly
+            address: formValues.address || this.placeToBeEdited?.address || '',
+            creation_date: new Date,
+            modified_date: new Date,
+            deactivated: false
           };
           console.log(edit)
       

@@ -12,7 +12,6 @@ export interface Place {
         longitude: number;
     };
     photo: string;
-    location: string;
     typeOfPlace: {
         bankito: boolean;
         public: boolean; //false = private true = public
@@ -28,6 +27,7 @@ export interface Place {
         sunday: string;
     };
     address: string;
-    date: Date;
+    creation_date: Date;
+    modified_date: Date;
     deactivated: boolean;
 }
