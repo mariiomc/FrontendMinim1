@@ -178,6 +178,7 @@ export class PlaceComponent {
     
       editPlaceMode(): void {
         this.editMode = true;
+        console.log("editando...")
         if(this.selectedPlace){
           this.placeToBeEdited = this.selectedPlace;
         }else if(this.searchedPlace){
@@ -213,6 +214,7 @@ export class PlaceComponent {
       }
       editPlaceSubmit(): void {
           // Extract form values
+          console.log("mandamos edit...")
           const formValues = this.placeForm.value;
           
       
@@ -248,11 +250,11 @@ export class PlaceComponent {
             modified_date: new Date,
             deactivated: false
           };
-          console.log(edit)
+          console.log("edit: "+edit)
       
           this.placeService.updatePlace(edit).subscribe({
             next: (editedPlace: Place) => {
-              console.log('Place created:', editedPlace);
+              console.log('Place created: ', editedPlace);
               // Optionally, reset the form after successful submission
               this.refreshPlaceList();
               this.placeForm.reset();
@@ -261,7 +263,7 @@ export class PlaceComponent {
               // You may also want to navigate the user back to the user list view or perform any other action
             },
             error: (error: any) => {
-              console.error('Error creating place:', error);
+              console.error('Error creating place: ', error);
               // Handle error cases
             }
           });
