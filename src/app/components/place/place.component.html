@@ -133,31 +133,31 @@
                                     <h3>Schedule:</h3>
                                     <div>
                                         <label for="monday">Monday:</label>
-                                        <input id="monday" type="checkbox" formControlName="monday" >
+                                        <input id="monday" type="text" formControlName="monday" >
                                     </div>
                                     <div>
                                         <label for="tuesday">Tuesday:</label>
-                                        <input id="tuesday" type="checkbox" formControlName="tuesday" >
+                                        <input id="tuesday" type="text" formControlName="tuesday" >
                                     </div>
                                     <div>
                                         <label for="wednesday">Wednesday:</label>
-                                        <input id="wednesday" type="checkbox" formControlName="wednesday" >
+                                        <input id="wednesday" type="text" formControlName="wednesday" >
                                     </div>
                                     <div>
                                         <label for="thursday">Thursday:</label>
-                                        <input id="thursday" type="checkbox" formControlName="thursday" >
+                                        <input id="thursday" type="text" formControlName="thursday" >
                                     </div>
                                     <div>
                                         <label for="friday">Friday:</label>
-                                        <input id="friday" type="checkbox" formControlName="friday" >
+                                        <input id="friday" type="text" formControlName="friday" >
                                     </div>
                                     <div>
                                         <label for="saturday">Saturday:</label>
-                                        <input id="saturday" type="checkbox" formControlName="saturday" >
+                                        <input id="saturday" type="text" formControlName="saturday" >
                                     </div>
                                     <div>
                                         <label for="sunday">Sunday:</label>
-                                        <input id="sunday" type="checkbox" formControlName="sunday" >
+                                        <input id="sunday" type="chectextkbox" formControlName="sunday" >
                                     </div>
                                 </div>
                                 <div>
@@ -165,7 +165,7 @@
                                     <input id="address" type="text" formControlName="address" class="form-control" required>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-primary" (click)="editPlaceSubmit()">{{ createMode ? 'Create' : 'Save' }}</button>
+                                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ createMode ? 'Create' : 'Save' }}</button>
                                     <span style="margin-right: 10px;"></span>
                                     <button class="btn btn-primary" type="button" (click)="backToPlaceList()">Cancel</button>
                                 </div>

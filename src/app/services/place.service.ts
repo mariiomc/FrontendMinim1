@@ -26,7 +26,7 @@ export class PlaceService {
   }
 
   createPlace(newPlace : Place |undefined) {
-    return this.http.post<Place>(this.url+'/place',newPlace);
+    return this.http.post<Place>(this.url+'/place',newPlace,{ headers: this.getHeaders() });
   }
 
   getPlace(findPlace : string){

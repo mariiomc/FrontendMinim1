@@ -36,23 +36,23 @@ export class PlaceComponent {
     }),
     photo: new FormControl('', Validators.required),
     typeOfPlace: new FormGroup({
-      bankito: new FormControl(false, Validators.required),
-      public: new FormControl(false, Validators.required),
-      covered: new FormControl(false, Validators.required)
+      bankito: new FormControl(false),
+      public: new FormControl(false),
+      covered: new FormControl(false)
     }),
     schedule: new FormGroup({
-      monday: new FormControl('', Validators.required),
-      tuesday: new FormControl('', Validators.required),
-      wednesday: new FormControl('', Validators.required),
-      thursday: new FormControl('', Validators.required),
-      friday: new FormControl('', Validators.required),
-      saturday: new FormControl('', Validators.required),
-      sunday: new FormControl('', Validators.required)
+      monday: new FormControl(''),
+      tuesday: new FormControl(''),
+      wednesday: new FormControl(''),
+      thursday: new FormControl(''),
+      friday: new FormControl(''),
+      saturday: new FormControl(''),
+      sunday: new FormControl('')
     }),
     address: new FormControl('', Validators.required),
-    creation_date: new FormControl('', Validators.required),
-    modified_date: new FormControl('', Validators.required),
-    deactivated: new FormControl('', Validators.required)
+    creation_date: new FormControl(''),
+    modified_date: new FormControl(''),
+    deactivated: new FormControl('')
   });
 
   constructor( public placeService: PlaceService, private formBuilder: FormBuilder)
@@ -88,7 +88,9 @@ export class PlaceComponent {
     }
     
     onSubmit(): void {
+      console.log("onSubmit()")
       if (this.placeForm.valid) {
+        console.log("válido")
         // Extract form values
         const formValues = this.placeForm.value;
             
@@ -116,7 +118,7 @@ export class PlaceComponent {
             thursday: (formValues.schedule?.thursday || ''),
             friday: (formValues.schedule?.friday || ''),
             saturday: (formValues.schedule?.saturday || ''),
-            sunday: (formValues.schedule?.sunday || ''),
+            sunday: (formValues.schedule?.sunday || '')
           },
           address: formValues.address || '',
           creation_date: new Date,
@@ -140,6 +142,7 @@ export class PlaceComponent {
         });
         
       }
+      console.log("no es válido")
     }
     
     refreshPlaceList(): void {
@@ -203,7 +206,7 @@ export class PlaceComponent {
             thursday: (this.placeToBeEdited?.schedule?.thursday || ''),
             friday: (this.placeToBeEdited?.schedule?.friday || ''),
             saturday: (this.placeToBeEdited?.schedule?.saturday || ''),
-            sunday: (this.placeToBeEdited?.schedule?.sunday || ''),
+            sunday: (this.placeToBeEdited?.schedule?.sunday || '')
           },
           address: this.placeToBeEdited?.address || '',
         });
