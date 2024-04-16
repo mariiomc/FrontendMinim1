@@ -4,6 +4,9 @@ import {FormsModule} from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EventService } from '../../services/event.service';
+import { Event } from '../../models/event';
+
 
 @Component({
   selector: 'app-user',
@@ -48,10 +51,18 @@ userForm = new FormGroup({
   })
 });
 
-constructor( public userService: UserService, private formBuilder: FormBuilder)
+eventForm = new FormGroup({
+  ultimoLogin: new FormControl(Date),
+  User: new FormControl(''),
+  edicionUser: new FormControl(''),
+  deactivated: new FormControl(false)
+});
+
+constructor( public userService: UserService, public eventService: EventService, private formBuilder: FormBuilder)
 {
   
 }
+
 
 ngOnInit(): void {
 // Fetch data from API
@@ -112,6 +123,13 @@ onSubmit(): void {
       // Include other properties similarly
     };
 
+    const newEvent: Event = {
+      ultimoLogin: new Date,
+      User: 'Usuario creado: '+ newUser.first_name,
+      edicionUser: 'No se ha editado ningún usuario',
+      event_deactivated: false
+    };
+
     this.userService.createUser(newUser).subscribe({
       next: (createdUser: User) => {
         console.log('User created:', createdUser);
@@ -123,6 +141,20 @@ onSubmit(): void {
       },
       error: (error: any) => {
         console.error('Error creating user:', error);
+        // Handle error cases
+      }
+    });
+
+    this.eventService.createEvent(newEvent).subscribe({
+      next: (createdEvent: Event) => {
+        console.log('Event created: ', createdEvent);
+        // Optionally, reset the form after successful submission
+        this.eventForm.reset();
+        this.createMode = false;
+        // You may also want to navigate the user back to the user list view or perform any other action
+      },
+      error: (error: any) => {
+        console.error('Error creating event: ', error);
         // Handle error cases
       }
     });
@@ -231,7 +263,12 @@ nextPage(): void {
         // Include other properties similarly
       };
       console.log(edit)
-  
+      const edit1: Event = {
+            ultimoLogin: new Date,
+            User: 'No se ha creado ningún usuario',
+            edicionUser: 'Usuario editado: '+edit.first_name, 
+            event_deactivated: false
+          };
       this.userService.updateUser(edit).subscribe({
         next: (editedUser: User) => {
           console.log('User created:', editedUser);
@@ -244,6 +281,20 @@ nextPage(): void {
         },
         error: (error: any) => {
           console.error('Error creating user:', error);
+          // Handle error cases
+        }
+      });
+
+      this.eventService.createEvent(edit1).subscribe({
+        next: (createdEvent: Event) => {
+          console.log('Event created: ', createdEvent);
+          // Optionally, reset the form after successful submission
+          this.eventForm.reset();
+          this.createMode = false;
+          // You may also want to navigate the user back to the user list view or perform any other action
+        },
+        error: (error: any) => {
+          console.error('Error creating event: ', error);
           // Handle error cases
         }
       });
