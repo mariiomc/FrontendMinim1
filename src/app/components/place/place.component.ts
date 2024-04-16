@@ -217,7 +217,6 @@ export class PlaceComponent {
           console.log("mandamos edit...")
           const formValues = this.placeForm.value;
           
-      
           // Create a new user object from form values
           const edit: Place = {
             _id: this.placeToBeEdited?._id,

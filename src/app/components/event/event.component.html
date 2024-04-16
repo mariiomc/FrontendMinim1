@@ -1,0 +1,122 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="searchBarEventString">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" (click)="searchForEvent()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <!-- Display selected place details -->
+                    @if(eventSelected && selectedEvent && editMode==false && createMode==false){
+                        <div>
+                            <h1>Event Details</h1>
+                            
+                            <p>ID: {{selectedEvent._id}}</p>
+                            @if (selectedEvent.ultimoLogin != null){
+                                <p>Ultimo login: {{selectedEvent.ultimoLogin}}</p>
+                            }
+                            @if (selectedEvent.User != null){
+                                <p>Último Usuario creado: {{selectedEvent.User}}</p>
+                            }
+                            @if (selectedEvent.edicionUser!=null){
+                                <p>Cambios en la última actualización de Usuario: {{selectedEvent.edicionUser}}</p>
+                            }
+                            
+                           <!-- @if(selectedEvent.event_deactivated){
+                                <p>Event Status: Deactivated</p>
+                            }@else{
+                                <p>Event Status: Active</p>
+                            }-->
+
+                            <button class="btn btn-primary" type="button" (click)="backToEventList()">Back</button>
+                            <span style="margin-right: 10px;"></span>
+                            <button class="btn btn-primary" type="button" (click)="editEventMode()">Edit Event</button>
+                            <span style="margin-right: 10px;"></span>
+                            <button class="btn btn-primary" type="button" (click)="deactivateEvent()">Deactivate Event</button>
+                        </div>
+                    }@else if (searchEventMode && searchedEvent==null){
+                        <h1>Event not found</h1>
+                        <button class="btn btn-primary" type="button" (click)="backToEventList()">Back</button>
+                    }@else if(eventSelected==false && createMode==false && searchEventMode==false && editMode==false){
+                        <!-- Display list of events -->
+                        <h1>Events found:</h1>
+                        <ul style="list-style: none; padding: 0;"> 
+                            @for(event of events; track event._id)
+                            {
+                                <li style="padding:5px">
+                                    <button class="btn btn-primary" type="button" (click)="onSelectEvent(event)">
+                                        <span class="name">{{event.ultimoLogin}}</span>
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                        <div style="padding:10px" > 
+                            <button class="btn btn-primary" type="button" (click)="createEventBtn()">Create new event</button>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-auto">
+                    <!-- Create or edit a event -->
+                    @if(createMode==true){
+                        <div>
+                            <h1>{{ createMode ? 'Create' : 'Edit' }} Event</h1>
+                            <form [formGroup]="eventForm" (submit)="onSubmit()">
+                                <div>
+                                    <label for="ultimoLogin">Ultimo Login:</label>
+                                    <input id="ultimoLogin" type="date" formControlName="ultimoLogin" class="form-control">
+                                </div>
+                                <div>
+                                    <label for="User">ID del usuario:</label>
+                                    <input id="User" type="text" formControlName="User" class="form-control">
+                                </div>
+                                <div>
+                                    <label for="edicionUser">Últimos cambios a un usuario:</label>
+                                    <input id="edicionUser" type="text" formControlName="edicionUser" class="form-control">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ createMode ? 'Create' : 'Save' }}</button>
+                                    <span style="margin-right: 10px;"></span>
+                                    <button class="btn btn-primary" type="button" (click)="backToEventList()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    @else if (editMode==true){
+                        <div>
+                            <h1>{{ editMode ? 'Create' : 'Edit' }} Event</h1>
+                            <form [formGroup]="eventForm" (submit)="editEventSubmit()">
+                                <div>
+                                    <label for="ultimoLogin">Ultimo Login:</label>
+                                    <input id="ultimoLogin" type="date" formControlName="ultimoLogin" class="form-control">
+                                </div>
+                                <div>
+                                    <label for="User">ID del usuario:</label>
+                                    <input id="User" type="text" formControlName="User" class="form-control">
+                                </div>
+                                <div>
+                                    <label for="edicionUser">Últimos cambios a un usuario:</label>
+                                    <input id="edicionUser" type="text" formControlName="edicionUser" class="form-control">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary" (click)="editEventSubmit()">{{ editMode ? 'Edit' : 'Save' }}</button>
+                                    <span style="margin-right: 10px;"></span>
+                                    <button class="btn btn-primary" type="button" (click)="backToEventList()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
